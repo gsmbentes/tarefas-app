@@ -1,0 +1,121 @@
+:host {
+  display: block;
+  max-width: 640px;
+  margin: 48px auto;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  color: #243047;
+}
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  margin: 4px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+li span {
+  flex: 1;
+}
+
+.concluida {
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+@media (max-width: 480px) {
+  :host {
+    margin: 16px auto;
+    padding: 16px;
+  }
+
+  li {
+    flex-wrap: wrap;
+  }
+
+  li span {
+    flex-basis: 100%;
+  }
+}
+
+.botao-lixeira {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #dc3545;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+.botao-lixeira:hover {
+  background: #bb2d3b;
+}
+
+.botao-lixeira i {
+  font-size: 20px;
+}
+
+.botao-lixeira.botao-voltar {
+  background: #2563eb;
+}
+
+.botao-lixeira.botao-voltar:hover {
+  background: #1d4ed8;
+}
+
+.quantidade-lixeira {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 22%);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .botao-lixeira {
+    left: 12px;
+    bottom: 12px;
+  }
+}

@@ -1,0 +1,77 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+<button
+  type="button"
+  class="botao-lixeira"
+  [class.botao-voltar]="mostrarLixeira"
+  (click)="alternarLixeira()"
+  [attr.aria-label]="mostrarLixeira ? 'Voltar ao painel principal' : 'Abrir lixeira'">
+
+  <i
+    class="bi"
+    [class.bi-trash3]="!mostrarLixeira"
+    [class.bi-arrow-left]="mostrarLixeira"
+    aria-hidden="true">
+  </i>
+
+  <span>{{ mostrarLixeira ? 'Voltar ao painel' : 'Lixeira' }}</span>
+  <span class="quantidade-lixeira">{{ lixeira.length }}</span>
+</button>
+@if (!mostrarLixeira) {
+<label for="nova-tarefa">Nova tarefa</label>
+<input id="nova-tarefa" #campoTarefa type="text">
+<button
+type="button"
+(click)="adicionarTarefa(campoTarefa.value); campoTarefa.value=''">adicionar</button>
+
+
+<section>
+  <h1>Minha lista de tarefas</h1>
+
+  <ul>
+    @for (tarefa of tarefasVisiveis(); track tarefa) {
+      <li>
+        <span [class.concluida]="tarefa.concluida">{{tarefa.texto}}</span>
+
+      <button type="button" (click)="alternarEstado(tarefa)">{{tarefa.concluida ? 'Reabrir':'Concluir'}}</button>
+
+      <button type="button" (click)="excluirTarefa(tarefa)">
+      Excluir
+    </button>
+  </li>}@empty{
+    <li>nenhuma tarefa por enquanto. Adicione uma!</li>
+  }
+</ul>
+</section>
+<button type="button" (click)="filtro = 'todas'">Todas</button>
+<button type="button" (click)="filtro = 'pendentes'">Pendentes</button>
+<button type="button" (click)="filtro = 'concluidas'">Concluídas</button>
+<p>Tarefas exibidas: {{ tarefasVisiveis().length }}</p>
+<p>Concluídas no total: {{ contadorTarefas() }} de {{ tarefas.length }}</p>
+  } @else{
+    <h2>Lixeira</h2>
+
+  <ul>
+    @for (tarefa of lixeira; track tarefa) {
+      <li>
+        <span [class.concluida]="tarefa.concluida">
+          {{ tarefa.texto }}
+        </span>
+
+        <button type="button" (click)="restaurarTarefa(tarefa)">
+          Restaurar
+        </button>
+        <button
+        type="button"
+        (click)="excluirPermanentemente(tarefa)">
+        Excluir permanentemente
+        </button>
+      </li>
+    } @empty {
+      <li>A lixeira está vazia.</li>
+    }
+  </ul>
+}
+
+

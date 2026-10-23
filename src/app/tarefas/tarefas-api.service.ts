@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface TarefaApi {
   id: number;
@@ -12,7 +13,7 @@ export interface TarefaApi {
   providedIn: 'root',
 })
 export class TarefasApiService {
-  private readonly apiUrl = 'http://127.0.0.1:8000/api/tarefas/';
+  private readonly apiUrl = `${environment.apiBaseUrl}/tarefas/`;
   private readonly http = inject(HttpClient);
 
   listar() {

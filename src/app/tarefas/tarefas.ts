@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TarefaApi, TarefasApiService } from './tarefas-api.service';
-import { error } from 'node:console';
 
 @Component({
   imports: [],

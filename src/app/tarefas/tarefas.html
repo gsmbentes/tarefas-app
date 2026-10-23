@@ -30,7 +30,7 @@ type="button"
   <h1>Minha lista de tarefas</h1>
 
   <ul>
-    @for (tarefa of tarefasVisiveis(); track tarefa) {
+    @for (tarefa of tarefasVisiveis(); track tarefa.id) {
       <li>
         <span [class.concluida]="tarefa.concluida">{{tarefa.texto}}</span>
 
@@ -53,7 +53,7 @@ type="button"
     <h2>Lixeira</h2>
 
   <ul>
-    @for (tarefa of lixeira; track tarefa) {
+    @for (tarefa of lixeira; track tarefa.id) {
       <li>
         <span [class.concluida]="tarefa.concluida">
           {{ tarefa.texto }}

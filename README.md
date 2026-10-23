@@ -1,59 +1,39 @@
 # TarefasApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.1.
+Aplicação de lista de tarefas com frontend Angular e API Django REST Framework.
 
-## Development server
+## Frontend
 
-To start a local development server, run:
-
-```bash
-ng serve
+```powershell
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+O frontend de desenvolvimento usa a API em `http://127.0.0.1:8000/api`. Esse valor fica em `src/environments/environment.development.ts`.
 
-## Code scaffolding
+## Backend
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```powershell
+cd backend-tarefas
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+O CORS de desenvolvimento permite `http://localhost:4200` e `http://127.0.0.1:4200`. Para mudar essa lista, defina `CORS_ALLOWED_ORIGINS` como uma lista de origens separadas por vírgula.
 
-```bash
-ng generate --help
+## Configuração para produção
+
+Antes de publicar, defina `DJANGO_DEBUG=False`, `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS` e `CORS_ALLOWED_ORIGINS` no ambiente do servidor. `DJANGO_ALLOWED_HOSTS` e `CORS_ALLOWED_ORIGINS` aceitam valores separados por vírgula. O backend encerra a inicialização se `DJANGO_DEBUG` estiver desativado e `DJANGO_SECRET_KEY` não estiver definida.
+
+O build de produção usa `/api` como endereço da API, então o servidor web deve encaminhar esse caminho ao Django. Se a API for hospedada em outro domínio, atualize `apiBaseUrl` em `src/environments/environment.production.ts` antes do build.
+
+## Testes
+
+```powershell
+npm test
+cd backend-tarefas
+python manage.py test
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

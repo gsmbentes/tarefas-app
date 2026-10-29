@@ -1,0 +1,81 @@
+GUIA DO APP TAREFAS - ANDROID, APK E DJANGO
+Data: 28/10/2026
+
+1. O QUE FOI PREPARADO
+- Angular foi empacotado para Android usando Capacitor.
+- O projeto Android está na pasta android/.
+- Os ícones Bootstrap foram incluídos no app para não depender de CDN.
+- Para o emulador Android Studio, a API está configurada em http://10.0.2.2:8000/api.
+- Foi gerado um APK de depuração (debug), assinado para testes.
+
+2. ARQUIVO APK GERADO
+Caminho:
+C:\Users\gustavo\Documents\tarefas-app\android\app\build\outputs\apk\debug\app-debug.apk
+
+Tamanho aproximado: 4,4 MB.
+Este APK é para desenvolvimento e depuração. Para publicar na Play Store é necessário gerar uma versão de lançamento assinada.
+
+3. COMO ABRIR A TELA NO EMULADOR
+1. No Android Studio, abra View > Tool Windows > Device Manager.
+2. Clique em + > Create Virtual Device.
+3. Escolha um modelo (por exemplo, Pixel), selecione/baixe uma imagem Android e conclua.
+4. Inicie o emulador no botão ▶ do Device Manager.
+5. No Android Studio, aguarde a sincronização do Gradle.
+6. Selecione a configuração app e o emulador na barra superior e clique ▶ Run.
+
+Para compilar um novo APK no Android Studio, use Build > Build APK(s). O resultado de depuração será salvo no mesmo caminho acima.
+
+4. COMO INSTALAR O APK NO CELULAR VIA USB/ADB
+1. No celular, ative Opções do desenvolvedor e Depuração USB.
+2. Conecte o celular ao computador com um cabo USB que transfira dados.
+3. Desbloqueie o celular e aceite a solicitação de autorização da depuração USB, se aparecer.
+4. No Android Studio, confira se o celular aparece como dispositivo selecionável.
+5. Para instalar pelo ADB no PowerShell, execute:
+
+& "C:\Users\gustavo\AppData\Local\Android\Sdk\platform-tools\adb.exe" devices
+& "C:\Users\gustavo\AppData\Local\Android\Sdk\platform-tools\adb.exe" install -r "C:\Users\gustavo\Documents\tarefas-app\android\app\build\outputs\apk\debug\app-debug.apk"
+
+O primeiro comando deve listar o celular com o estado device. Se aparecer unauthorized, desbloqueie o celular e aceite a autorização USB. O comando install -r instala ou atualiza o app mantendo os dados locais compatíveis.
+
+Também é possível abrir o APK no Android Studio pelo menu Build > Build APK(s), clicar em Locate na notificação de compilação e copiar app-debug.apk para o celular. A instalação via adb é mais direta.
+
+5. COMO INICIAR O DJANGO NO COMPUTADOR
+Abra um segundo terminal no projeto e execute:
+
+cd C:\Users\gustavo\Documents\tarefas-app\backend-tarefas
+.\.venv\Scripts\Activate.ps1
+$env:DJANGO_ALLOWED_HOSTS = "localhost,127.0.0.1,10.0.2.2"
+$env:CORS_ALLOWED_ORIGINS = "http://localhost:4200,http://127.0.0.1:4200,https://localhost"
+python manage.py migrate
+python manage.py runserver
+
+Deixe esse terminal aberto enquanto estiver usando o app. No emulador, 10.0.2.2 é um endereço especial que aponta para o computador. O app e a API precisam estar ativos ao mesmo tempo para listar/criar/atualizar tarefas.
+
+6. USO EM CELULAR FÍSICO
+O APK gerado está apontando para o emulador (10.0.2.2). No celular físico, esse endereço não aponta para o computador.
+1. Deixe celular e computador na mesma rede Wi-Fi.
+2. No computador, use ipconfig e anote o IPv4 da rede Wi-Fi, por exemplo 192.168.0.15.
+3. Edite src/environments/environment.production.ts e troque a URL para http://192.168.0.15:8000/api, usando o IP real do seu computador.
+4. No Django, adicione esse IP em DJANGO_ALLOWED_HOSTS e mantenha https://localhost em CORS_ALLOWED_ORIGINS:
+
+$env:DJANGO_ALLOWED_HOSTS = "localhost,127.0.0.1,192.168.0.15"
+$env:CORS_ALLOWED_ORIGINS = "http://localhost:4200,http://127.0.0.1:4200,https://localhost"
+python manage.py runserver 0.0.0.0:8000
+
+5. Na pasta raiz do Angular, gere os arquivos Android atualizados:
+
+npm run android:sync
+
+6. No Android Studio, rode Build > Build APK(s) e instale o novo APK no celular usando o procedimento USB acima. O firewall do Windows pode pedir autorização para o Python aceitar conexão na rede privada.
+
+7. ATUALIZAR O APP DEPOIS DE MUDAR O ANGULAR
+Depois de alterar o frontend, execute na raiz do projeto:
+
+npm run android:sync
+
+Depois, no Android Studio, compile novamente com Build > Build APK(s) e reinstale o APK atualizado.
+
+OBSERVAÇÃO SOBRE A COMPILAÇÃO DESTE COMPUTADOR
+O Android Studio deste computador usa Java 25, que não é compatível com o Gradle atual deste projeto. O APK desta vez foi compilado com JDK 21 portátil e o SDK Android instalado. Para compilar pelo Android Studio no futuro, selecione um JDK 21 em File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK. A pasta temporária usada nesta compilação foi:
+C:\Users\gustavo\AppData\Local\Temp\temurin-jdk21\jdk-21.0.12.1+1
+Se essa pasta for removida, instale um JDK 21 e selecione a nova pasta nesse ajuste.

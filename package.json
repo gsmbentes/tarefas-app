@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "android:sync": "ng build --configuration production && cap sync android",
+    "android:open": "cap open android",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:tarefas-app": "node dist/tarefas-app/server/server.mjs"
@@ -20,6 +22,9 @@
     "@angular/platform-server": "^22.2.0",
     "@angular/router": "^22.2.0",
     "@angular/ssr": "^22.2.1",
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0",
+    "bootstrap-icons": "^1.13.2",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -28,6 +33,7 @@
     "@angular/build": "^22.2.1",
     "@angular/cli": "^22.2.1",
     "@angular/compiler-cli": "^22.2.0",
+    "@capacitor/cli": "^8.6.0",
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
     "jsdom": "^30.0.0",

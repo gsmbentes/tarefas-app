@@ -22,6 +22,28 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Android Studio / APK
+
+O projeto Android fica na pasta `android/` e usa Capacitor para empacotar o frontend Angular.
+Com Android Studio e o Android SDK instalados:
+
+```powershell
+npm run android:sync
+npm run android:open
+```
+
+No Android Studio, aguarde a sincronização do Gradle e use **Build > Build APK(s)**. O APK de depuração fica em `android/app/build/outputs/apk/debug/app-debug.apk`.
+
+O build aponta para a API Django no computador pela URL `http://10.0.2.2:8000/api`, endereço especial do emulador Android Studio. Para permitir essa conexão no Django, inicie o servidor com:
+
+```powershell
+$env:DJANGO_ALLOWED_HOSTS = "localhost,127.0.0.1,10.0.2.2"
+$env:CORS_ALLOWED_ORIGINS = "http://localhost:4200,http://127.0.0.1:4200,https://localhost"
+python manage.py runserver
+```
+
+O app e a API precisam estar rodando ao mesmo tempo. Em um celular físico, substitua `10.0.2.2` em `src/environments/environment.production.ts` pelo IP local do computador (por exemplo, `192.168.0.15`) e adicione esse IP aos `DJANGO_ALLOWED_HOSTS`; o telefone e o computador precisam estar na mesma rede Wi-Fi.
+
 O CORS de desenvolvimento permite `http://localhost:4200` e `http://127.0.0.1:4200`. Para mudar essa lista, defina `CORS_ALLOWED_ORIGINS` como uma lista de origens separadas por vírgula.
 
 ## Configuração para produção
